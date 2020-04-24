@@ -60,7 +60,7 @@ resource "aws_security_group" "sg-instance" {
     }
 }
 
-resource "aws_instance" "aik-portal" {
+resource "aws_instance" "aik-portal-front" {
     ami = "ami-0fc61db8544a617ed"
     instance_type = "t2.micro"
     key_name = "developer"
@@ -71,22 +71,22 @@ resource "aws_instance" "aik-portal" {
     }
     user_data = <<-EOF
 
-    #!/bin/bash
-    set -euf -o pipefail
-    exec 1> >(logger -s -t $(basename $0)) 2>&1
+        #!/bin/bash
+        sudo yum update -y
+        sudo yum install -y git 
+        #Clone salt repo
+        git clone https://github.com/juan-bol/aik-portal-iac.git /srv/Configuration_management
 
-    sudo yum install -y git
-    sudo git clone https://github.com/icesi-ops/aik-portal.git /srv/App
-    sudo chmod 700 /srv/App
-    
-    # install node
-    sudo yum install -y gcc-c++ make
-    curl -sL https://rpm.nodesource.com/setup_12.x | sudo -E bash -
-    sudo yum install -y nodejs
+        #Install Salstack
+        sudo yum install -y https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm
+        sudo yum clean expire-cache;sudo yum -y install salt-minion; chkconfig salt-minion off
 
-    cd /srv/App/aik-portal/aik-app-ui
-    sudo npm install
-    node server.js        
+        #Put custom minion config in place (for enabling masterless mode)
+        sudo cp -r /srv/Configuration_management/SaltStack/minion.d /etc/salt/
+        echo -e 'grains:\n roles:\n  - frontend' > /etc/salt/minion.d/grains.conf
+
+        ## Trigger a full Salt run
+        sudo salt-call state.apply
 
     EOF
     
