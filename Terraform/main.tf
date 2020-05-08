@@ -1,5 +1,5 @@
 provider "aws"{
-    region = "us-east-1"
+    region = "us-west-2"
 }
 
 #VPC
@@ -101,7 +101,7 @@ resource "aws_autoscaling_group" "aik_autoscaling"{
     target_group_arns = ["${aws_lb_target_group.asg.arn}"]
 
     tag = {
-        #name = "asg-BRZ"
+        #name = "aik_autoscaling_BRZ"
         key = "Name"
         value = "Aik-asg"
         propagate_at_launch = true
