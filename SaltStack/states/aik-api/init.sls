@@ -1,13 +1,10 @@
 include:
-    - git
     - nodejs
 
-aik-ui:
+aik-api:
     git.latest:
      - name: https://github.com/juan-bol/aik-portal-back
      - target: /srv/appback
-    require:
-     - pkg: git
 
 install_npm_dependencies:
     npm.bootstrap:
@@ -15,4 +12,4 @@ install_npm_dependencies:
 
 run_aik_portal:
     cmd.run:
-      - name: "nohup node server.js > /dev/null 2>&1 &" 
+      - name: "nohup node /srv/appback/server.js > /dev/null 2>&1 &" 

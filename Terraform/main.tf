@@ -116,7 +116,7 @@ resource "aws_launch_configuration" "aik-lcfg" {
     instance_type = "${var.aik-instance-type}"
     security_groups = ["${aws_security_group.aik-sg-portal.id}"]
     key_name = "${var.aik-key-BRZ}"
-    user_data = "${file("jenkins.sh")}"
+    user_data = "${file("./jenkins.sh")}"
 }
 
 
