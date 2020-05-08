@@ -1,8 +1,13 @@
-terraform init
-terraform validate -> les hace el check de todo. Mejor usar antes del plan
-terraform plan
-terraform apply
-teraform destroy # si se putea
+# Portal AIK
 
-terraform show -> para ver el estado actual
-terraform fmt -> formatea el código para evitar bad merged por espacios.
+- Juan David Bolaños
+- Alejandra Ramos
+- Leonardo Zambrano
+
+## **Diagrama de la solución - Prototipo**
+
+![image](https://drive.google.com/uc?export=view&id=1GDfmGSIZYwpjPwPeK-BDlX8DYai1EQnI)
+
+## **Diagrama de la solución - Completo**
+
+![image](https://drive.google.com/uc?export=view&id=1CwEA7PychXA_V5PsnSU-Jz16_uZAZtnK)
