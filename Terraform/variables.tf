@@ -1,6 +1,6 @@
 variable "aik-ami-id" {
   description = "AMI ID used for apply to instance's AIK"
-  default = "ami-0fc61db8544a617ed"
+  default = "ami-0d6621c01e8c2de2c"
 
 }
 

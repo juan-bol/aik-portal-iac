@@ -95,15 +95,15 @@ resource "aws_security_group" "aik-sg-portal" {
 
 resource "aws_autoscaling_group" "aik_autoscaling"{
     launch_configuration = "${aws_launch_configuration.aik-lcfg.name}"
-    min_size = 2
-    max_size = 3
+    min_size = 1
+    max_size = 2
     vpc_zone_identifier  = ["${aws_subnet.aik-subnet-public.id}","${aws_subnet.aik-subnet-public2.id}"]
     target_group_arns = ["${aws_lb_target_group.asg.arn}"]
 
     tag = {
         #name = "aik_autoscaling_BRZ"
         key = "Name"
-        value = "Aik-asg"
+        value = "BRZ-asg"
         propagate_at_launch = true
 
     }
@@ -122,11 +122,13 @@ user_data = <<-EOF
         sudo yum update -y
         sudo yum install -y git 
         #Clone salt repo
-        git clone https://github.com/juan-bol/aik-portal-iac /srv/saltstack
+        git clone -b feature-iac https://github.com/juan-bol/aik-portal-iac /srv/saltstack
 
         #Install Salstack
-        sudo yum install -y https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm
-        sudo yum clean expire-cache;sudo yum -y install salt-minion; chkconfig salt-minion off
+        #sudo yum install -y https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm
+        #sudo yum clean expire-cache;sudo yum -y install salt-minion; chkconfig salt-minion off
+        sudo curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
+        sudo sh bootstrap_salt.sh
 
         #Put custom minion config in place (for enabling masterless mode)
         sudo cp -r /srv/saltstack/SaltStack/minion.d /etc/salt/
