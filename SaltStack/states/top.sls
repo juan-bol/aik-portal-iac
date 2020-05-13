@@ -1,11 +1,7 @@
 base:
 
-  'roles:frontend':
+  'roles:server':
     - match: grain
-    - aik-ui
+    - aik-server
     - nodejs
 
-  'roles:backend':
-    - match: grain
-    - aik-api
-    - nodejs
