@@ -118,7 +118,7 @@ resource "aws_launch_configuration" "aik-lcfg" {
     instance_type = "${var.aik-instance-type}"
     security_groups = ["${aws_security_group.aik-sg-portal.id}"]
     key_name = "${var.aik-key-BRZ}"
-    user_data = "${file("./jenkins.sh")}"
+    user_data = "${file("./userdata.sh")}"
 }
 
 
@@ -206,4 +206,50 @@ resource "aws_lb_target_group" "asg" {
         unhealthy_threshold = 2
     }
   
+}
+
+resource "aws_db_subnet_group" "subnetg" {
+  name       = "${var.aws_db_subnet_group_brz}"
+  subnet_ids = ["${aws_subnet.aik-subnet-public.id}","${aws_subnet.aik-subnet-public2.id}"]
+
+  tags = {
+    Name = "${var.aws_db_subnet_group_brz}"
+  }
+}
+
+resource "aws_security_group" "db_instance" {
+  name   = "${var.security_group_brz}"
+  vpc_id = "${aws_vpc.aik-vpc.id}"
+
+  # Allow inbound HTTP requests
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    security_groups = ["${aws_security_group.aik-sg-portal.id}"]
+  }
+
+  # Allow all outbound requests
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_db_instance" "db" {
+  identifier             = "db-instance-brz"
+  engine                 = "mysql"
+  engine_version         = "5.7.21"
+  port                   = 3306
+  name                   = "dbbrz"
+  username               = "automatizacionbrz"
+  password               = "password"
+  instance_class         = "db.t2.micro"
+  allocated_storage      = 5
+  skip_final_snapshot    = true
+  db_subnet_group_name   = "${aws_db_subnet_group.subnetg.id}"
+  vpc_security_group_ids = ["${aws_security_group.db_instance.id}"]
+
 }
