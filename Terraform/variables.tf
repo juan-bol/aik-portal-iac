@@ -51,3 +51,15 @@ variable "alb_security_group_BRZ" {
   type        = "string"
   default     = "alb_sg_BRZ"
 }
+
+variable "aws_db_subnet_group_brz" {
+  description = "Name of the database"
+  type        = "string"
+  default     = "db-brz"
+}
+
+variable "security_group_brz" {
+  description = "Name of the database security group"
+  type        = "string"
+  default     = "sg_db_BRZ"
+}
