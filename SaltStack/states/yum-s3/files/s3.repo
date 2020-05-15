@@ -2,5 +2,6 @@
 name=S3-repo
 #baseurl=https://brz-bucket-automatizacion.s3.us-west-2.amazonaws.com/
 baseurl=https://s3.us-west-2.amazonaws.com/brz-bucket-automatizacion/
+#baseurl=https://s3.amazonaws.com/brz-bucket-automatizacion
 enabled=1
 gpgcheck=0
