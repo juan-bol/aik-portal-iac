@@ -118,6 +118,9 @@ resource "aws_launch_configuration" "aik-lcfg" {
     instance_type = "${var.aik-instance-type}"
     security_groups = ["${aws_security_group.aik-sg-portal.id}"]
     key_name = "${var.aik-key-BRZ}"
+
+    depends_on = ["aws_db_instance.db"]
+
     user_data = "${file("./userdata.sh")}"
 }
 
