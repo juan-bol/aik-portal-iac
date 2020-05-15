@@ -255,7 +255,7 @@ def get_region_from_s3url(url):
         return groups[0]
     else:
         # No region info in S3 URL
-        return "us-east-1"
+        return "us-west-2"
 
 
 def retry_url(url, retry_on_404=False, num_retries=retries, timeout=timeout):
