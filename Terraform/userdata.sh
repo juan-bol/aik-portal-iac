@@ -2,7 +2,7 @@
 sudo yum update -y
 sudo yum install -y git 
 #Clone salt repo
-sudo git clone -b feature-iac-db https://github.com/juan-bol/aik-portal-iac /srv/saltstack
+sudo git clone https://github.com/juan-bol/aik-portal-iac /srv/saltstack
 #Install Salstack
 #sudo yum install -y https://repo.saltstack.com/yum/redhat/salt-repo-latest.el7.noarch.rpm
 #sudo yum clean expire-cache;sudo yum -y install salt-minion; chkconfig salt-minion off
